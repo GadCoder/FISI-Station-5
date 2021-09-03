@@ -1,3 +1,8 @@
-SpiderMan,1222253277
+OSCAR,30000
 lu,380
 RONY,80
+Bryancito,70
+DIEGUITO,55
+Bryan y su Fruguitos,40
+PEPITO,30
+WAMBRISHO,15
