@@ -375,7 +375,7 @@ void lose_window(RenderWindow& window)
 		game_over.setPosition(240, 280);
 
 		retry.setFont(image.font);
-		retry.setString("Pulsa  Enter para continuar");
+		retry.setString("Pulsa  Enter para continuar \n\t\tPulsa  Esc para salir");
 		retry.setCharacterSize(20);
 		retry.setPosition(220, 540);
 
@@ -402,6 +402,10 @@ void windowEvents(RenderWindow& window)
 			if (ev.key.code == Keyboard::Space or ev.key.code == Keyboard::Up)
 			{
 				sounds.jumpSound.play();
+			}
+			if (ev.key.code == Keyboard::Escape)
+			{
+				exit(1);
 			}
 		}
 	}
