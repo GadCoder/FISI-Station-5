@@ -1,12 +1,11 @@
 #include "StartFrame.h"
 
-
 enum{
     ID_nameBTN = 1
 };
 
 StartFrame::StartFrame()
-     : wxFrame(nullptr, wxID_ANY, "FISI STATION 5", wxDefaultPosition, wxSize(1000, 800)) 
+     : wxFrame(nullptr, wxID_ANY, "FISI STATION 5", wxDefaultPosition, wxSize(700, 900)) 
 {
     wxFont font(wxFontInfo(24));
     SetBackgroundColour(wxColour(122, 204, 226 ));

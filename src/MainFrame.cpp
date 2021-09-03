@@ -5,7 +5,7 @@ enum{
 };
 
 MainFrame::MainFrame(std::string name)
-     : wxFrame(nullptr, wxID_ANY, "FISI STATION", wxDefaultPosition, wxSize(1000, 800)) 
+     : wxFrame(nullptr, wxID_ANY, "FISI STATION", wxDefaultPosition, wxSize(700, 900)) 
 {
     wxFont font(wxFontInfo(24));
     SetBackgroundColour(wxColour(122,204,226));
@@ -38,7 +38,9 @@ void MainFrame::getGameSelected(wxCommandEvent& event){
     {
     case 0: //rocoto
     {
-        /* code */
+        gameSelected = true;
+        rocotoLauncher = new RocotoLauncher();
+        rocotoLauncher->launchGame(&score);
         break;
     }
     case 1: //castillo

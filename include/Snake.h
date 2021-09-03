@@ -1,8 +1,8 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <vector>
-#include "Textures.h"
-#include "Food.h"  
+#include "SnakeTextures.h"
+#include "SnakeFood.h"  
 
 
 enum class Directions { Left, Right, Up, Down , Static};

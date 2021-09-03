@@ -7,6 +7,7 @@
 #include "SnakeLauncher.h"
 #include "ScoreFrame.h"
 #include "CastilloLauncher.h"
+#include "RocotoLauncher.h"
 
 
 class MainFrame : public wxFrame
@@ -15,6 +16,7 @@ public:
     ScoreFrame *scoreFrame;
     SnakeLauncher *snakeLauncher;
     CastilloLauncher *castilloLauncher;
+    RocotoLauncher *rocotoLauncher;
     wxTextCtrl  *playerNameDisplay;
     std::string playerName;
     wxButton *button;

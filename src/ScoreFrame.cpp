@@ -29,7 +29,7 @@ std::string ScoreValues::makeData(){
 
 
 ScoreFrame::ScoreFrame(int opc, std::string p_score)
-     : wxFrame(nullptr, wxID_ANY, "FISI STATION - SCORES", wxDefaultPosition, wxSize(1000, 800)) 
+     : wxFrame(nullptr, wxID_ANY, "FISI STATION - SCORES", wxDefaultPosition, wxSize(700, 900)) 
 {
     SetBackgroundColour(wxColour(122,204,226));
     ScorePATHS paths;
@@ -54,7 +54,7 @@ ScoreFrame::ScoreFrame(int opc, std::string p_score)
     }
     wxFont font(wxFontInfo(18));
     SetBackgroundColour(wxColour(122,204,226));
-    gameNameDisplay = new wxTextCtrl(this,wxID_ANY,gameName,wxPoint(300,100),wxSize(400,100),wxTE_READONLY | wxTE_CENTRE);
+    gameNameDisplay = new wxTextCtrl(this,wxID_ANY,gameName,wxPoint(150,150),wxSize(400,100),wxTE_READONLY | wxTE_CENTRE);
     gameNameDisplay->SetFont(font);
 
     writeTXT.open(scorePath,std::ios::app);
@@ -64,9 +64,9 @@ ScoreFrame::ScoreFrame(int opc, std::string p_score)
     updateScore(scores);
     writeTXT.close();
     readTXT.close();
-    scoreBoard = new wxListBox(this,ID_board,wxPoint(300,250),wxSize(400,300),scores,wxTE_CENTRE);
-    menuBTN = new wxButton(this,wxID_ANY,"Volver al menu",wxPoint(300,650),wxSize(150,50));
-    exitBTN = new wxButton(this,wxID_ANY,"Salir",wxPoint(550,650),wxSize(150,50));
+    scoreBoard = new wxListBox(this,ID_board,wxPoint(150,300),wxSize(400,300),scores,wxTE_CENTRE);
+    menuBTN = new wxButton(this,wxID_ANY,"Volver al menu",wxPoint(150,700),wxSize(150,50)); //+400
+    exitBTN = new wxButton(this,wxID_ANY,"Salir",wxPoint(400,700),wxSize(150,50));
 }
 
 void ScoreFrame::addScore(std::string score){

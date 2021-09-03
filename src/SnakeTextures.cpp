@@ -1,4 +1,4 @@
-#include "Textures.h"
+#include "SnakeTextures.h"
 Textures::Textures(){
         //Head textures
         headLeft.loadFromFile("./content/Snake/head_left.png");
