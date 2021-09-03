@@ -1,6 +1,9 @@
-﻿#include <SFML/Graphics.hpp>
+#include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
+#include <iostream>
 #include <string>
 #include "CastilloLauncher.h"
+
 using namespace sf;
 
 //WINDOW DIMENSIONS//
@@ -25,6 +28,16 @@ struct Position
 	int x;
 	int y;
 }cloud1pos, cloud2pos, playerPos, hatPos, enemyPos;
+
+struct Sounds
+{
+	SoundBuffer buffer;
+	Music loseSound;
+	Music gameMusic;
+	Sound jumpSound;
+
+	void loadSounds();
+}sounds;
 
 struct Player
 {
@@ -66,12 +79,11 @@ void objectMove(Position&, int&, int&);
 void initPos(Position&, int, int);
 void replay();
 void game_window(RenderWindow&);
-void lose_window(RenderWindow&, bool&);
-void closeWindow(RenderWindow&);
-
+void lose_window(RenderWindow&);
+void windowEvents(RenderWindow&);
 
 //Main
- void CastilloLauncher::launchGame(int *p_score_ptr)
+void CastilloLauncher::launchGame(int* p_score_ptr)
 {
 	//WINDOW VARIABLE
 	RenderWindow window(VideoMode(WIDTH, HEIGHT), "Castillo Game");
@@ -80,6 +92,11 @@ void closeWindow(RenderWindow&);
 	//Loading images
 	image.loadImages();
 	image.score();
+
+	//Loading sounds
+	sounds.loadSounds();
+	sounds.gameMusic.play();
+	sounds.gameMusic.setLoop(true);
 
 	//CLOUDS AND ENEMY SIZE
 	int cloud1Width = image.cloud1.getSize().x;
@@ -109,8 +126,9 @@ void closeWindow(RenderWindow&);
 	//LOOP FOR WINDOW
 	while (window.isOpen())
 	{
-		/// CLOSE WINDOW ///
-		closeWindow(window);
+
+		/// WINDOW EVENTS ///
+		windowEvents(window);
 
 		/// PLAYER JUMP ///
 		player.jump();
@@ -135,12 +153,14 @@ void closeWindow(RenderWindow&);
 		{
 			game_window(window);
 		}
-		/// GAME OVER ///
+
+		/// PLAYER INTERSECTS WITH ENEMY
 		if (image.players[player.index].getGlobalBounds().intersects(image.enemy.getGlobalBounds()))
 		{
-			*p_score_ptr = score.points/20;
-			lose_window(window, score.gameLose);
+			*p_score_ptr = score.points / 20;
+			lose_window(window);
 		}
+
 	}
 }
 
@@ -174,6 +194,31 @@ void Images::score()
 	txt_points.setPosition(10, 25);
 	txt_points.setCharacterSize(20);
 	txt_points.setFillColor(Color::Yellow);
+}
+
+/// SOUNDS ///
+void Sounds::loadSounds()
+{
+	if (!sounds.gameMusic.openFromFile("./content/Sounds/gameMusic.wav"))
+	{
+		std::cout << "Error, sound not found" << std::endl;
+	}
+
+	if (!sounds.loseSound.openFromFile("./content/Sounds/castilloo.ogg"))
+	{
+		std::cout << "Error, sound not found" << std::endl;
+	}
+	sounds.loseSound.setVolume(10.f);
+
+	if (!sounds.buffer.loadFromFile("./content/Sounds/jump.wav"))
+	{
+		std::cout << "Error, sound not found" << std::endl;
+	}
+
+	sounds.jumpSound.setBuffer(buffer);
+	sounds.gameMusic.setVolume(5.f);
+	sounds.loseSound.setVolume(5.f);
+	sounds.jumpSound.setVolume(10.f);
 }
 
 void initPos(Position& obj, int pos_x, int pos_y)
@@ -240,7 +285,6 @@ void objectMove(Position& obj, int& width, int& speed)
 	}
 }
 
-
 void Player::steps()
 {
 	step += stepSpeed;
@@ -291,6 +335,7 @@ void replay()
 		if (score.gameLose)
 		{
 			//Restart values
+			sounds.loseSound.stop();
 			score.gameLose = false;
 			score.points = 10;
 			enemyPos.x = WIDTH - 200;
@@ -313,30 +358,37 @@ void game_window(RenderWindow& window)
 	window.display();
 }
 
-void lose_window(RenderWindow& window, bool& gameLose)
+void lose_window(RenderWindow& window)
 {
-	gameLose = true;
-	Text game_over, retry;
+	while (!score.gameLose)
+	{
+		score.gameLose = true;
+		Text game_over, retry;
 
-	game_over.setFont(image.font);
-	game_over.setString("GAME OVER!!!!!!");
-	game_over.setCharacterSize(40);
-	game_over.setFillColor(Color::Red);
-	game_over.setPosition(240, 280);
+		sounds.gameMusic.stop();
+		sounds.loseSound.play();
 
-	retry.setFont(image.font);
-	retry.setString("Pulsa  Enter para continuar");
-	retry.setCharacterSize(20);
-	retry.setPosition(220, 540);
+		game_over.setFont(image.font);
+		game_over.setString("GAME OVER!!!!!!");
+		game_over.setCharacterSize(40);
+		game_over.setFillColor(Color::Red);
+		game_over.setPosition(240, 280);
 
-	window.draw(image.spr_bg_over);
-	window.draw(game_over);
-	window.draw(retry);
-	window.draw(image.txt_points);
-	window.display();
+		retry.setFont(image.font);
+		retry.setString("Pulsa  Enter para continuar");
+		retry.setCharacterSize(20);
+		retry.setPosition(220, 540);
+
+		window.clear();
+		window.draw(image.spr_bg_over);
+		window.draw(game_over);
+		window.draw(retry);
+		window.draw(image.txt_points);
+		window.display();
+	}
 }
 
-void closeWindow(RenderWindow& window)
+void windowEvents(RenderWindow& window)
 {
 	Event ev;
 	while (window.pollEvent(ev))
@@ -344,6 +396,13 @@ void closeWindow(RenderWindow& window)
 		if (ev.type == Event::Closed)
 		{
 			window.close();
+		}
+		if (ev.type == Event::KeyPressed)
+		{
+			if (ev.key.code == Keyboard::Space or ev.key.code == Keyboard::Up)
+			{
+				sounds.jumpSound.play();
+			}
 		}
 	}
 }
