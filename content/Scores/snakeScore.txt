@@ -1,12 +1,2 @@
-Castillo,50
-fafaf,30
-lu,20
-Manuel,10
-marco,0
-BArbitas,0
-Barbitas,0
-nou,0
-yey,0
-qasf,0
-yey,0
-yey,0
+Ndsa,130
+a,0

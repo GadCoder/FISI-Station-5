@@ -405,7 +405,8 @@ void windowEvents(RenderWindow& window)
 			}
 			if (ev.key.code == Keyboard::Escape)
 			{
-				exit(1);
+				sounds.loseSound.stop();
+				window.close();
 			}
 		}
 	}

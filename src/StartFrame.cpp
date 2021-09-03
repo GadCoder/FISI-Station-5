@@ -9,7 +9,7 @@ StartFrame::StartFrame()
 {
     wxFont font(wxFontInfo(24));
     SetBackgroundColour(wxColour(122, 204, 226 ));
-    button = new wxButton(this,ID_nameBTN,"Ingresar nombre",wxPoint(150,500),wxSize(150,50));
+    button = new wxButton(this,ID_nameBTN,"Ingresar nombre",wxPoint(275,500),wxSize(150,50));
     nameField = new wxTextCtrl(this,wxID_ANY,"",wxPoint(150,350),wxSize(400,100),wxTE_CENTRE);
     nameField->SetFont(font);
     Bind(wxEVT_BUTTON, &StartFrame::getName, this, ID_nameBTN);
@@ -28,7 +28,7 @@ void StartFrame::getName(wxCommandEvent& event){
     userName = nameField->GetValue().ToStdString();
 
     if(userName.size() < 1){
-
+        wxMessageBox("Ingrese su nombre OwO");
     }else{
         this->Destroy();
         main = new MainFrame(userName);

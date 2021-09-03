@@ -111,7 +111,6 @@ void ScoreFrame::updateScore(wxArrayString &p_scores, wxArrayString &p_names){
 
 
 void ScoreFrame::launchMenu(wxCommandEvent& event){
-    std::cout<<"In launch"<<std::endl;
     this->Show(false);
     MainFrame *main = new MainFrame(playerName);
     main->Show(true);
@@ -119,6 +118,5 @@ void ScoreFrame::launchMenu(wxCommandEvent& event){
 
 }
 void ScoreFrame::exit(wxCommandEvent& event){
-    std::cout<<"In exit"<<std::endl;
     this->Close();
 }

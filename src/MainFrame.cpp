@@ -33,12 +33,12 @@ void MainFrame::getGameSelected(wxCommandEvent& event){
     int gameIndex = gamesList->GetSelection();
     bool gameSelected = false;
     int score;
-    this->Show(false);
     switch (gameIndex)
     {
     case 0: //rocoto
     {
         gameSelected = true;
+        this->Show(false);
         rocotoLauncher = new RocotoLauncher();
         rocotoLauncher->launchGame(&score);
         break;
@@ -46,6 +46,7 @@ void MainFrame::getGameSelected(wxCommandEvent& event){
     case 1: //castillo
     {
         gameSelected = true;
+        this->Show(false);
         castilloLauncher = new CastilloLauncher();
         castilloLauncher->launchGame(&score);
         break;
@@ -53,11 +54,13 @@ void MainFrame::getGameSelected(wxCommandEvent& event){
     case 2: //loro machaco
     {
         gameSelected = true;
+        this->Show(false);
         snakeLauncher = new SnakeLauncher();
         snakeLauncher->launchGame(&score);
         break;
     }    
     default:
+        gameSelected = false;
         break;
     }
     if(gameSelected){
@@ -65,6 +68,8 @@ void MainFrame::getGameSelected(wxCommandEvent& event){
         scoreFrame = new ScoreFrame(gameIndex, scoreData, playerName);
         scoreFrame->Show(true);
         this->Destroy();
+    }else{
+        wxMessageBox("Seleccione un juego OwO");
     }
 }
 

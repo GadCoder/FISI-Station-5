@@ -207,12 +207,9 @@ void Snake::setTextures() {
     }
 
     if(bodyExists){
-        for(int i = 1; i < bodySize; i++){
-            if(i % 2 == 0)
-                snakeBody[i].setTexture(&snakeTextures.body_one);
-            else
-                snakeBody[i].setTexture(&snakeTextures.body_two);
-        }
+        for(int i = 1; i < bodySize; i++)
+                snakeBody[i].setTexture(&snakeTextures.body);
+   
     }  
 }
 

@@ -4,7 +4,7 @@ class SnakeLauncher{
 public:
     void launchGame(int *p_score_ptr);
     SnakeLauncher(){
-        bgTexture.loadFromFile("./content/Snake/background_4.png");
+        bgTexture.loadFromFile("./content/Snake/background.png");
         background.setTexture(bgTexture);
     }
 private:   
